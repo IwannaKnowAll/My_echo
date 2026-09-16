@@ -14,11 +14,9 @@ const props = withDefaults(
   defineProps<{
     visible: boolean;
     settings: AppSettings | null;
-    saving?: boolean;
     error?: string;
   }>(),
   {
-    saving: false,
     error: '',
   },
 );

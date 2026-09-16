@@ -9,13 +9,22 @@ use serde_json::json;
 use std::process::Command;
 use tauri::{AppHandle, Emitter};
 
+/// 转义 AppleScript 字符串内的特殊字符，避免破坏脚本结构
+fn escape_applescript(s: &str) -> String {
+    s.replace('\\', "\\\\").replace('"', "\\\"")
+}
+
 /// 发送到期提醒：osascript 弹系统通知，并延时 1 秒后打开对应备忘录。
 pub fn send_reminder(app: AppHandle, memo_id: i64, title: String) {
     eprintln!("[notification] send_reminder: id={} title={}", memo_id, title);
 
     // 1) 子线程发 osascript 通知（同步阻塞等待返回，避免占住调度线程）
     std::thread::spawn(move || {
-        let script = format!(r#"display notification "备忘提醒" with title "{}""#, title);
+        let safe_title = escape_applescript(&title);
+        let script = format!(
+            r#"display notification "备忘提醒" with title "{}""#,
+            safe_title
+        );
         if let Err(e) = Command::new("osascript").arg("-e").arg(&script).output() {
             eprintln!("[notification] osascript error: {:?}", e);
         }

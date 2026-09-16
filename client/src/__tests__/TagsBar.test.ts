@@ -56,6 +56,26 @@ describe('TagsBar', () => {
     expect(wrapper.emitted('create')).toEqual([['新标签']]);
   });
 
+  it('标签名超过 30 个码点被拦截并提示', async () => {
+    const wrapper = mount(TagsBar, { props: { tags, activeTagId: null } });
+    await wrapper.get('.tags-bar__add').trigger('click');
+    const input = wrapper.get('.tags-bar__input');
+    await input.setValue('a'.repeat(31));
+    await input.trigger('keydown.enter');
+    expect(wrapper.emitted('create')).toBeUndefined();
+    expect(wrapper.text()).toContain('标签名不能超过 30 个字符');
+  });
+
+  it('30 个 emoji 计为 30 码点，不被 UTF-16 长度误拦', async () => {
+    const wrapper = mount(TagsBar, { props: { tags, activeTagId: null } });
+    await wrapper.get('.tags-bar__add').trigger('click');
+    const input = wrapper.get('.tags-bar__input');
+    const name = '😀'.repeat(30);
+    await input.setValue(name);
+    await input.trigger('keydown.enter');
+    expect(wrapper.emitted('create')).toEqual([[name]]);
+  });
+
   it('点击标签移除按钮转发 remove 事件', async () => {
     const wrapper = mount(TagsBar, { props: { tags, activeTagId: null } });
     const chips = wrapper.findAllComponents({ name: 'TagChip' });

@@ -25,12 +25,14 @@ const emit = defineEmits<{
 
 const creating = ref(false);
 const newName = ref('');
+const nameError = ref('');
 const createInput = ref<HTMLInputElement | null>(null);
 const isEmpty = computed(() => props.tags.length === 0);
 
 function startCreate(): void {
   creating.value = true;
   newName.value = '';
+  nameError.value = '';
   void nextTick(() => {
     createInput.value?.focus();
   });
@@ -38,6 +40,11 @@ function startCreate(): void {
 
 function confirmCreate(): void {
   const name = newName.value.trim();
+  if (name !== '' && [...name].length > 30) {
+    nameError.value = '标签名不能超过 30 个字符';
+    return;
+  }
+  nameError.value = '';
   creating.value = false;
   newName.value = '';
   if (name === '') {
@@ -49,6 +56,7 @@ function confirmCreate(): void {
 function cancelCreate(): void {
   creating.value = false;
   newName.value = '';
+  nameError.value = '';
 }
 </script>
 
@@ -96,12 +104,14 @@ function cancelCreate(): void {
         v-model="newName"
         class="tags-bar__input"
         type="text"
-        maxlength="30"
         placeholder="标签名"
         @keydown.enter="confirmCreate"
         @keydown.esc="cancelCreate"
         @blur="cancelCreate"
       />
+    </div>
+    <div v-if="nameError" class="tags-bar__name-error">
+      <span class="tags-bar__error-text">{{ nameError }}</span>
     </div>
     <div v-if="error" class="tags-bar__error">
       <span class="tags-bar__error-text">{{ error }}</span>
@@ -194,6 +204,14 @@ function cancelCreate(): void {
   align-items: center;
   gap: var(--space-2);
   flex-basis: 100%;
+}
+
+.tags-bar__name-error {
+  flex-basis: 100%;
+}
+
+.tags-bar__name-error .tags-bar__error-text {
+  color: var(--color-warning);
 }
 
 .tags-bar__error-text {

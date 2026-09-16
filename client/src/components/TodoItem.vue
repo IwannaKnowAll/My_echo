@@ -1,7 +1,6 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    line: string;
     checked: boolean;
     text: string;
     disabled?: boolean;

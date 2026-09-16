@@ -34,7 +34,8 @@ function confirmSet(): void {
     error.value = '提醒时间格式不正确';
     return;
   }
-  if (new Date(utc).getTime() < Date.now()) {
+  const minute = 60_000;
+  if (Math.floor(new Date(utc).getTime() / minute) < Math.floor(Date.now() / minute)) {
     error.value = '提醒时间不能早于当前时间';
     return;
   }

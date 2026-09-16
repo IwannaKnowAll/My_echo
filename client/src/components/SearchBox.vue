@@ -24,7 +24,6 @@ function onInput(event: Event): void {
 }
 
 function onClear(): void {
-  emit('update:modelValue', '');
   emit('clear');
 }
 </script>

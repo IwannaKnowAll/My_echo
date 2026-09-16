@@ -27,14 +27,14 @@ pub fn set_memo_reminder(
     scheduler: State<'_, Scheduler>,
     input: SetMemoReminderInput,
 ) -> Result<Memo, AppError> {
-    let due = parse_to_utc_minute(&input.remind_at)?;
-    if due < chrono::Utc::now() {
-        return Err(AppError::validation("提醒时间不能早于当前时间"));
-    }
-
     let conn = lock_conn(&state)?;
     if !memo_exists(&conn, input.memo_id)? {
         return Err(AppError::not_found("备忘录不存在"));
+    }
+
+    let due = parse_to_utc_minute(&input.remind_at)?;
+    if due < chrono::Utc::now() {
+        return Err(AppError::validation("提醒时间不能早于当前时间"));
     }
 
     let stored = due.to_rfc3339_opts(chrono::SecondsFormat::Millis, true);

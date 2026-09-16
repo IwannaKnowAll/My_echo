@@ -220,11 +220,13 @@ function scheduleSearch(value: string): void {
 
 function onSearchInput(value: string): void {
   searchKeyword.value = value;
+  listNotice.value = '';
   scheduleSearch(value);
 }
 
 function onSearchClear(): void {
   searchKeyword.value = '';
+  listNotice.value = '';
   if (searchTimer !== null) {
     clearTimeout(searchTimer);
     searchTimer = null;
@@ -387,7 +389,7 @@ async function onSave(): Promise<void> {
     titleError.value = '标题不能为空';
     return;
   }
-  if (formTitle.value.length > 100) {
+  if ([...formTitle.value].length > 100) {
     titleError.value = '标题不能超过 100 个字符';
     return;
   }
@@ -730,9 +732,9 @@ onBeforeUnmount(() => {
             />
             <span
               class="title-counter"
-              :class="{ 'title-counter--over': formTitle.length > 100 }"
+              :class="{ 'title-counter--over': [...formTitle].length > 100 }"
             >
-              {{ formTitle.length }} / 100
+              {{ [...formTitle].length }} / 100
             </span>
           </div>
 
@@ -786,7 +788,6 @@ onBeforeUnmount(() => {
             <TodoItem
               v-for="(line, index) in todoLines"
               :key="index"
-              :line="line.line"
               :checked="line.checked"
               :text="line.text"
               :disabled="saving"
@@ -821,7 +822,6 @@ onBeforeUnmount(() => {
     <SettingsPanel
       :visible="settingsOpen"
       :settings="settings"
-      :saving="settingsSaving || settingsLoading"
       :error="settingsError"
       @update="onSettingsUpdate"
       @close="closeSettings"

@@ -3,7 +3,7 @@
 import type { TodoPart } from '../types/memo';
 
 /** 匹配 `- [ ]` / `- [x]` 待办行（允许前导空格，忽略大小写 x） */
-const TODO_LINE_RE = /^[ \t]*-[ \t]*\[([ xX])\]\s?(.*)$/;
+const TODO_LINE_RE = /^[ \t]*-[ \t]*\[([ xX])\][ \t]?(.*)$/;
 
 /** 解析单行，非待办行返回 null */
 function parseTodoLine(line: string): TodoPart | null {

@@ -94,7 +94,7 @@ fn is_valid_close_behavior(v: &str) -> bool {
     matches!(v, "quit" | "hide")
 }
 
-/// 快捷键合法性：含修饰键或为功能键（F1–F12）
+/// 快捷键合法性：修饰键 + 非修饰主键的组合，或功能键单键（F1–F12）
 fn is_valid_shortcut(binding: &str) -> bool {
     let b = binding.trim();
     if b.is_empty() {
@@ -105,9 +105,10 @@ fn is_valid_shortcut(binding: &str) -> bool {
     if is_fn_key {
         return true;
     }
-    b.split('+').map(|p| p.trim().to_uppercase()).any(|p| {
+    let parts: Vec<&str> = b.split('+').map(|p| p.trim()).collect();
+    let is_modifier = |p: &str| {
         matches!(
-            p.as_str(),
+            p.to_uppercase().as_str(),
             "CMD"
                 | "COMMAND"
                 | "CTRL"
@@ -119,7 +120,10 @@ fn is_valid_shortcut(binding: &str) -> bool {
                 | "CMDORCTRL"
                 | "COMMANDORCONTROL"
         )
-    })
+    };
+    let has_modifier = parts.iter().any(|p| is_modifier(p));
+    let has_main = parts.iter().any(|p| !p.is_empty() && !is_modifier(p));
+    has_modifier && has_main
 }
 
 /// 快捷键显示名（冲突提示用）

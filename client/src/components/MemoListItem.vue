@@ -33,11 +33,13 @@ const allDone = computed(() => progress.value.total > 0 && progress.value.done =
 </script>
 
 <template>
-  <button
-    type="button"
+  <div
     class="item"
     :class="{ 'item--selected': selected }"
+    role="button"
+    tabindex="0"
     @click="$emit('click')"
+    @keydown.enter="$emit('click')"
   >
     <div class="item__head">
       <span class="item__title">{{ memo.title }}</span>
@@ -56,7 +58,7 @@ const allDone = computed(() => progress.value.total > 0 && progress.value.done =
         {{ progress.done }}/{{ progress.total }}
       </span>
     </div>
-  </button>
+  </div>
 </template>
 
 <style scoped>

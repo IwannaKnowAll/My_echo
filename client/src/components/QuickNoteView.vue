@@ -22,7 +22,7 @@ async function save(): Promise<void> {
     titleError.value = '标题不能为空';
     return;
   }
-  if (title.value.length > 100) {
+  if ([...title.value].length > 100) {
     titleError.value = '标题不能超过 100 个字符';
     return;
   }

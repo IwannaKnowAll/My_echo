@@ -36,4 +36,22 @@ describe('MemoListItem', () => {
     await wrapper.trigger('click');
     expect(wrapper.emitted('click')).toHaveLength(1);
   });
+
+  it('外层为 div 且带 role=button 与键盘可达', () => {
+    const wrapper = mount(MemoListItem, {
+      props: { memo, timeText: 'x' },
+    });
+    const root = wrapper.get('.item');
+    expect(root.element.tagName).toBe('DIV');
+    expect(root.attributes('role')).toBe('button');
+    expect(root.attributes('tabindex')).toBe('0');
+  });
+
+  it('按 Enter 触发 click 事件（键盘可达行为）', async () => {
+    const wrapper = mount(MemoListItem, {
+      props: { memo, timeText: 'x' },
+    });
+    await wrapper.get('.item').trigger('keydown', { key: 'Enter' });
+    expect(wrapper.emitted('click')).toHaveLength(1);
+  });
 });

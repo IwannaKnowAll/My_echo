@@ -48,6 +48,14 @@
 | P3-20 | notification.rs 中标题直接拼进 AppleScript 双引号字符串，含双引号/反斜杠的标题会破坏脚本导致该次通知不弹 | 拼接前对 title 做转义 |
 | P3-21 | ~~权限降级检测在 osascript 方案下失效~~ | 已清理：2026-09-16 移除前端权限检测死代码（App.vue 与 ReminderField 的 permissionDenied 逻辑及测试），111 测试全绿 |
 
+## 7. P3 批量修复销项记录（2026-09-16）
+
+以下各项已修复并经 Reviewer 复审关闭（壳层 34 测试、前端 117 测试全绿；release 实机验证通过）：
+
+- 已关闭：P3-1（窗口 720×560 + min 560×440）、P3-2（csp `default-src 'self'`，release 实机验证无白屏）、P3-3、P3-4、P3-5（含 Enter 键盘可达，Space 待补）、P3-6、P3-11、P3-12、P3-13、P3-14、P3-16、P3-17、P3-20
+
+- P3-24 · 已知行为记录：debug 裸二进制（未走 tauri dev）在 devUrl 存在时回退嵌入资源会白屏——属 Tauri 开发模式边界，不影响 release 产物；开发验证一律用 `tauri dev` 或 release 包（集成验证纪律，与 P3-19 相关）。
+
 ## 6. v0.2.0 发布查验新增 P3
 
 | 编号 | 事项 | 建议 |

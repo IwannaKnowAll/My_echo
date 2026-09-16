@@ -21,12 +21,14 @@
     "windows": [
       {
         "title": "My Echo",
-        "width": 960,
-        "height": 680
+        "width": 720,
+        "height": 560,
+        "minWidth": 560,
+        "minHeight": 440
       }
     ],
     "security": {
-      "csp": null
+      "csp": "default-src 'self'"
     }
   },
   "bundle": {

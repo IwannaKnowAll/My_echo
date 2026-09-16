@@ -14,13 +14,13 @@ describe('SearchBox', () => {
     expect(wrapper.emitted('update:modelValue')).toEqual([['关键词']]);
   });
 
-  it('非空时显示清空按钮，点击触发 clear 并清空', async () => {
+  it('非空时显示清空按钮，点击仅触发 clear（不再重复触发 update:modelValue）', async () => {
     const wrapper = mount(SearchBox, { props: { modelValue: '关键词' } });
     expect(wrapper.find('.search__clear').exists()).toBe(true);
 
     await wrapper.get('.search__clear').trigger('click');
-    expect(wrapper.emitted('update:modelValue')).toEqual([['']]);
     expect(wrapper.emitted('clear')).toHaveLength(1);
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined();
   });
 
   it('空输入时不显示清空按钮', () => {

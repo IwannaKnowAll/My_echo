@@ -47,6 +47,23 @@ describe('ReminderField', () => {
     expect(wrapper.emitted('change')![0][0]).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
   });
 
+  it('选择当前分钟的时间不被误判为过去', async () => {
+    const wrapper = mount(ReminderField, { props: { memoId: 1, remindAt: '' } });
+    await wrapper.get('.reminder__add').trigger('click');
+
+    const now = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const localValue = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(
+      now.getDate(),
+    )}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+    await wrapper.get('.reminder__picker').setValue(localValue);
+    await wrapper.findAll('.reminder__link').find((b) => b.text() === '设置')!.trigger('click');
+
+    expect(wrapper.text()).not.toContain('提醒时间不能早于当前时间');
+    expect(wrapper.emitted('change')).toHaveLength(1);
+  });
+
   it('清除触发 change 空串', async () => {
     const wrapper = mount(ReminderField, {
       props: { memoId: 1, remindAt: new Date(Date.now() + 3600_000).toISOString() },

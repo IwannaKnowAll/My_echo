@@ -34,6 +34,13 @@ describe('parseTodoLines 解析边界', () => {
     // PRD 3.2：半角与全角空格不视为待办语法。全角空格（U+3000）分隔的 -　[ ] 不应解析为待办。
     expect(parseTodoLines('-　[ ] 全角分隔')).toHaveLength(0);
   });
+
+  it('方括号后全角空格不视为分隔符，作为正文保留', () => {
+    // 全角空格（U+3000）不再被 [ \t]? 吞掉，应保留为正文首字符。
+    const parts = parseTodoLines('- [ ]　全角文本');
+    expect(parts).toHaveLength(1);
+    expect(parts[0].text).toBe('　全角文本');
+  });
 });
 
 describe('countTodo 统计', () => {
