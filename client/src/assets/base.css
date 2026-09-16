@@ -1,0 +1,232 @@
+/* 设计令牌（对齐 docs/ui_design.md §3 + docs/ui_design-轻量强化包.md §3.1）+ 全局基础样式 */
+
+:root {
+  /* 色板（P0 15 变量，light 默认值） */
+  --color-bg: #f5f5f7;
+  --color-surface: #ffffff;
+  --color-surface-hover: #e8e8ed;
+  --color-border: #d2d2d7;
+  --color-text: #1d1d1f;
+  --color-text-secondary: #6e6e73;
+  --color-text-tertiary: #86868b;
+  --color-accent: #0071e3;
+  --color-accent-hover: #0077ed;
+  --color-accent-active: #006edb;
+  --color-danger: #ff3b30;
+  --color-danger-hover: #d70015;
+  --color-focus-ring: rgba(0, 113, 227, 0.4);
+  --color-shadow: rgba(0, 0, 0, 0.12);
+  --color-success: #34c759;
+
+  /* 增量专属 token（light 默认值） */
+  --color-on-accent: #ffffff;
+  --color-tag-bg: #e8f0fe;
+  --color-tag-bg-hover: #d8e5fb;
+  --color-tag-text: #174ea6;
+  --color-tag-border: rgba(23, 78, 166, 0.18);
+  --color-tag-active-bg: #0071e3;
+  --color-checkbox-border: #8a8a8e;
+  --color-checkbox-checked: #0071e3;
+  --color-checkbox-check: #ffffff;
+  --color-progress-track: #e2e2e7;
+  --color-progress-fill: #34c759;
+  --color-reminder: #0071e3;
+  --color-reminder-muted: #86868b;
+  --color-warning: #ff9f0a;
+  --color-warning-bg: #fff4e0;
+  --color-switch-off: #d2d2d7;
+  --color-switch-on: #34c759;
+  --color-switch-thumb: #ffffff;
+  --color-overlay: rgba(0, 0, 0, 0.32);
+  --color-quicknote-bg: #ffffff;
+  --color-quicknote-border: #d2d2d7;
+
+  /* 字体 */
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+    "PingFang SC", sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 17px;
+  --font-size-xl: 20px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --line-height-tight: 1.3;
+  --line-height-normal: 1.5;
+
+  /* 间距 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* 圆角 */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-full: 999px;
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 2px var(--color-shadow);
+  --shadow-md: 0 8px 24px var(--color-shadow);
+  --shadow-focus: 0 0 0 3px var(--color-focus-ring);
+}
+
+/* system 深色兜底（JS 就绪前首屏；JS 就绪后由 html[data-theme] 接管） */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1e1e1e;
+    --color-surface: #2c2c2e;
+    --color-surface-hover: #3a3a3c;
+    --color-border: #48484a;
+    --color-text: #f5f5f7;
+    --color-text-secondary: #a1a1a6;
+    --color-text-tertiary: #86868b;
+    --color-accent: #0a84ff;
+    --color-accent-hover: #3395ff;
+    --color-accent-active: #0479e8;
+    --color-danger: #ff453a;
+    --color-danger-hover: #ff6961;
+    --color-focus-ring: rgba(10, 132, 255, 0.4);
+    --color-shadow: rgba(0, 0, 0, 0.45);
+    --color-success: #32d74b;
+
+    --color-on-accent: #ffffff;
+    --color-tag-bg: #2e3f56;
+    --color-tag-bg-hover: #38495f;
+    --color-tag-text: #a9c7ff;
+    --color-tag-border: rgba(169, 199, 255, 0.18);
+    --color-tag-active-bg: #0a84ff;
+    --color-checkbox-border: #636366;
+    --color-checkbox-checked: #0a84ff;
+    --color-checkbox-check: #ffffff;
+    --color-progress-track: #3a3a3c;
+    --color-progress-fill: #32d74b;
+    --color-reminder: #0a84ff;
+    --color-reminder-muted: #86868b;
+    --color-warning: #ffd60a;
+    --color-warning-bg: #4a3a1a;
+    --color-switch-off: #48484a;
+    --color-switch-on: #32d74b;
+    --color-switch-thumb: #ffffff;
+    --color-overlay: rgba(0, 0, 0, 0.5);
+    --color-quicknote-bg: #2c2c2e;
+    --color-quicknote-border: #48484a;
+  }
+}
+
+/* 显式浅色：优先级高于 @media，避免显式选择被系统外观覆盖 */
+html[data-theme='light'] {
+  --color-bg: #f5f5f7;
+  --color-surface: #ffffff;
+  --color-surface-hover: #e8e8ed;
+  --color-border: #d2d2d7;
+  --color-text: #1d1d1f;
+  --color-text-secondary: #6e6e73;
+  --color-text-tertiary: #86868b;
+  --color-accent: #0071e3;
+  --color-accent-hover: #0077ed;
+  --color-accent-active: #006edb;
+  --color-danger: #ff3b30;
+  --color-danger-hover: #d70015;
+  --color-focus-ring: rgba(0, 113, 227, 0.4);
+  --color-shadow: rgba(0, 0, 0, 0.12);
+  --color-success: #34c759;
+
+  --color-on-accent: #ffffff;
+  --color-tag-bg: #e8f0fe;
+  --color-tag-bg-hover: #d8e5fb;
+  --color-tag-text: #174ea6;
+  --color-tag-border: rgba(23, 78, 166, 0.18);
+  --color-tag-active-bg: #0071e3;
+  --color-checkbox-border: #8a8a8e;
+  --color-checkbox-checked: #0071e3;
+  --color-checkbox-check: #ffffff;
+  --color-progress-track: #e2e2e7;
+  --color-progress-fill: #34c759;
+  --color-reminder: #0071e3;
+  --color-reminder-muted: #86868b;
+  --color-warning: #ff9f0a;
+  --color-warning-bg: #fff4e0;
+  --color-switch-off: #d2d2d7;
+  --color-switch-on: #34c759;
+  --color-switch-thumb: #ffffff;
+  --color-overlay: rgba(0, 0, 0, 0.32);
+  --color-quicknote-bg: #ffffff;
+  --color-quicknote-border: #d2d2d7;
+}
+
+/* 显式深色：强制深色，最后声明，优先级最高 */
+html[data-theme='dark'] {
+  --color-bg: #1e1e1e;
+  --color-surface: #2c2c2e;
+  --color-surface-hover: #3a3a3c;
+  --color-border: #48484a;
+  --color-text: #f5f5f7;
+  --color-text-secondary: #a1a1a6;
+  --color-text-tertiary: #86868b;
+  --color-accent: #0a84ff;
+  --color-accent-hover: #3395ff;
+  --color-accent-active: #0479e8;
+  --color-danger: #ff453a;
+  --color-danger-hover: #ff6961;
+  --color-focus-ring: rgba(10, 132, 255, 0.4);
+  --color-shadow: rgba(0, 0, 0, 0.45);
+  --color-success: #32d74b;
+
+  --color-on-accent: #ffffff;
+  --color-tag-bg: #2e3f56;
+  --color-tag-bg-hover: #38495f;
+  --color-tag-text: #a9c7ff;
+  --color-tag-border: rgba(169, 199, 255, 0.18);
+  --color-tag-active-bg: #0a84ff;
+  --color-checkbox-border: #636366;
+  --color-checkbox-checked: #0a84ff;
+  --color-checkbox-check: #ffffff;
+  --color-progress-track: #3a3a3c;
+  --color-progress-fill: #32d74b;
+  --color-reminder: #0a84ff;
+  --color-reminder-muted: #86868b;
+  --color-warning: #ffd60a;
+  --color-warning-bg: #4a3a1a;
+  --color-switch-off: #48484a;
+  --color-switch-on: #32d74b;
+  --color-switch-thumb: #ffffff;
+  --color-overlay: rgba(0, 0, 0, 0.5);
+  --color-quicknote-bg: #2c2c2e;
+  --color-quicknote-border: #48484a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: var(--line-height-normal);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+button {
+  font-family: var(--font-family);
+}
+
+input,
+textarea {
+  user-select: text;
+}
