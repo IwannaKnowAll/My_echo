@@ -1,5 +1,6 @@
 name = "Frontend"
 description = "前端工程师，基于 Vue3+TypeScript 实现界面与交互逻辑"
+model = "deepseek-V4-Pro-正式版"
 model_reasoning_effort = "high"
 developer_instructions = """
 开工铁律（必读）：

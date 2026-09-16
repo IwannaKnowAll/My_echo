@@ -1,5 +1,6 @@
 name = "Shell"
 description = "桌面壳工程师，负责 Tauri Command 实现、SQLite 存取与打包发布"
+model = "deepseek-V4-Pro-正式版"
 model_reasoning_effort = "high"
 developer_instructions = """
 开工铁律（必读）：

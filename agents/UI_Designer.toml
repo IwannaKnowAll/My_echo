@@ -1,5 +1,6 @@
 name = "UI_Designer"
 description = "UI/UX 设计师，输出页面结构、交互流程与视觉规范文档"
+model = "deepseek-V4-Pro-正式版"
 model_reasoning_effort = "high"
 sandbox_mode = "read-only"
 developer_instructions = """

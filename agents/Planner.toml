@@ -1,5 +1,6 @@
 name = "Planner"
 description = "需求与架构规划师，负责分析需求、输出 SQLite 表结构与 Tauri Command 契约、拆解任务"
+model = "deepseek-V4-Pro-正式版"
 model_reasoning_effort = "high"
 sandbox_mode = "read-only"
 developer_instructions = """

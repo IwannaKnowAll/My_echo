@@ -1,5 +1,6 @@
 name = "Reviewer"
 description = "QA 与代码审查员，负责契约一致性、代码质量、测试覆盖与发布把关"
+model = "deepseek-V4-Pro-正式版"
 model_reasoning_effort = "high"
 developer_instructions = """
 开工铁律（必读）：
