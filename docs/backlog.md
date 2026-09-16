@@ -30,7 +30,7 @@
 | P3-7 | bundle identifier 为 `com.myecho.app`，结尾 `.app` 与 macOS 应用包扩展名语义易混淆 | 改为 `com.myecho.desktop` 之类；注意改动会迁移数据目录 `~/Library/Application Support/...` 路径，正式分发前定 |
 | P3-8 | 图标为 512×512 纯色占位 | 正式发布前替换为真实品牌图标（多尺寸 ICNS 源） |
 | P3-9 | 仅 ad-hoc 签名，dmg 未签名、未公证 | 本机自用可用；对外分发会被 Gatekeeper 拦截，需开发者证书签名+公证 |
-| P3-10 | client/、src-tauri/、docs/ 均为 git untracked，核心代码未入库 | 尽快完成首次 git 提交以便追溯与回滚（需用户确认后执行） |
+| P3-10 | ~~核心代码未入库~~ | 已完成：2026-09-16 分两组提交（eb525d2 配置文档 + db817ec 代码共 79 文件），工作区干净 |
 
 ## 5. 轻量强化包首轮审查新增 P3（F06-F11）
 
