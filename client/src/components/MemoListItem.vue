@@ -15,9 +15,13 @@ const props = withDefaults(
   },
 );
 
-defineEmits<{
+const emit = defineEmits<{
   click: [];
 }>();
+
+const activate = () => {
+  emit('click');
+};
 
 const progress = computed(() => countTodo(props.memo.content));
 const hasReminder = computed(() => props.memo.remind_at !== '');
@@ -38,8 +42,9 @@ const allDone = computed(() => progress.value.total > 0 && progress.value.done =
     :class="{ 'item--selected': selected }"
     role="button"
     tabindex="0"
-    @click="$emit('click')"
-    @keydown.enter="$emit('click')"
+    @click="activate"
+    @keydown.enter="activate"
+    @keydown.space.prevent="activate"
   >
     <div class="item__head">
       <span class="item__title">{{ memo.title }}</span>

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import MemoListItem from '../components/MemoListItem.vue';
 import type { Memo } from '../types/memo';
 
@@ -52,6 +52,16 @@ describe('MemoListItem', () => {
       props: { memo, timeText: 'x' },
     });
     await wrapper.get('.item').trigger('keydown', { key: 'Enter' });
+    expect(wrapper.emitted('click')).toHaveLength(1);
+  });
+
+  it('按 Space 触发 click 事件并阻止默认滚动', async () => {
+    const wrapper = mount(MemoListItem, {
+      props: { memo, timeText: 'x' },
+    });
+    const preventDefault = vi.fn();
+    await wrapper.get('.item').trigger('keydown', { key: ' ', preventDefault });
+    expect(preventDefault).toHaveBeenCalledTimes(1);
     expect(wrapper.emitted('click')).toHaveLength(1);
   });
 });

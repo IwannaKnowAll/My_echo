@@ -56,6 +56,13 @@
 
 - P3-24 · 已知行为记录：debug 裸二进制（未走 tauri dev）在 devUrl 存在时回退嵌入资源会白屏——属 Tauri 开发模式边界，不影响 release 产物；开发验证一律用 `tauri dev` 或 release 包（集成验证纪律，与 P3-19 相关）。
 
+## 8. 品牌与发布资产销项（2026-09-16）
+
+- P3-7 / P3-22（identifier）✅ 已改名 `com.myecho.desktop`，数据目录同步迁移且 5 行数据无损，release 实测通过
+- P3-8（品牌图标）✅ 已生成科技水滴图标（多模态模型），裁剪去水印后 512×512 RGBA 落盘 icons/icon.png，源图 icons/icon-source.jpg；release 标题栏实测显示新图标
+- Space 键可达性 ✅ MemoListItem 补 `@keydown.space.prevent`，测试 118 全绿
+- 重打包 0.2.0 完成（.app/.dmg，ad-hoc 未公证）
+
 ## 6. v0.2.0 发布查验新增 P3
 
 | 编号 | 事项 | 建议 |
